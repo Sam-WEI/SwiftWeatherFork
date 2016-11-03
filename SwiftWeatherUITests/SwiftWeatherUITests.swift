@@ -28,7 +28,7 @@ class SwiftWeatherUITests: XCTestCase {
 
     func testApp() {
         let app = XCUIApplication()
-        testNumberOfElements(app)
+        testNumberOfElements(app: app)
     }
 
     /* Actually test that images load...might want to find a more exact way of doing this... */
