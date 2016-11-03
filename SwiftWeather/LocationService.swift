@@ -37,6 +37,8 @@ extension LocationService : CLLocationManagerDelegate {
         }
     }
     
+    
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error finding location: \(error.errorCode)")
     }

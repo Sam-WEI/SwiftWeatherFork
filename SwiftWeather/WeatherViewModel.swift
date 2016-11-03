@@ -84,6 +84,12 @@ class WeatherViewModel {
 extension WeatherViewModel: LocationServiceDelegate {
   
   func locationDidUpdate(service: LocationService, location: CLLocation) {
+    weatherService.retrieveWeatherInfo(location: location) {
+      (weather, error) -> Void in
+      
+      
+    }
+    
     weatherService.retrieveWeatherInfo(location: location) { (weather, error) -> Void in
       DispatchQueue.main.async {
         if let unwrappedError = error {
