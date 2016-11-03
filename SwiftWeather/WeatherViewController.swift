@@ -37,10 +37,10 @@ class WeatherViewController: UIViewController {
       }
 
       viewModel?.forecasts.observe {
-        [unowned self] (let forecastViewModels) in
+        [unowned self] (forecastViewModels) in
         if forecastViewModels.count >= 4 {
-          for (index, forecastView) in self.forecastViews.enumerate() {
-            forecastView.loadViewModel(forecastViewModels[index])
+          for (index, forecastView) in self.forecastViews.enumerated() {
+            forecastView.loadViewModel(viewModel: forecastViewModels[index])
           }
         }
       }

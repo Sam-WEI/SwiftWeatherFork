@@ -13,7 +13,7 @@ protocol LocationServiceDelegate {
 class LocationService: NSObject {
   var delegate: LocationServiceDelegate?
 
-  private let locationManager = CLLocationManager()
+  fileprivate let locationManager = CLLocationManager()
 
   override init() {
     super.init()
@@ -30,14 +30,16 @@ class LocationService: NSObject {
 
 // MARK: - CLLocationManagerDelegate
 extension LocationService : CLLocationManagerDelegate {
-  func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    if let location = locations.first {
-      print("Current location: \(location)")
-      delegate?.locationDidUpdate(self, location: location)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("Current location: \(location)")
+            delegate?.locationDidUpdate(service: self, location: location)
+        }
     }
-  }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error finding location: \(error.errorCode)")
+    }
 
-  func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-    print("Error finding location: \(error.localizedDescription)")
-  }
+ 
 }

@@ -20,8 +20,8 @@ class WeatherViewModel {
   let forecasts: Observable<[ForecastViewModel]>
 
   // MARK: - Services
-  private var locationService: LocationService
-  private var weatherService: WeatherServiceProtocol
+  fileprivate var locationService: LocationService
+  fileprivate var weatherService: WeatherServiceProtocol
 
   // MARK: - init
   init() {
@@ -45,7 +45,7 @@ class WeatherViewModel {
   }
 
   // MARK: - private
-  private func update(weather: Weather) {
+  fileprivate func update(weather: Weather) {
       hasError.value = false
       errorMessage.value = nil
 
@@ -59,7 +59,7 @@ class WeatherViewModel {
       forecasts.value = tempForecasts
   }
 
-  private func update(error: Error) {
+  fileprivate func update(error: Error) {
       hasError.value = true
 
       switch error.errorCode {
@@ -82,20 +82,22 @@ class WeatherViewModel {
 
 // MARK: LocationServiceDelegate
 extension WeatherViewModel: LocationServiceDelegate {
+  
   func locationDidUpdate(service: LocationService, location: CLLocation) {
-    weatherService.retrieveWeatherInfo(location) { (weather, error) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+    weatherService.retrieveWeatherInfo(location: location) { (weather, error) -> Void in
+      DispatchQueue.main.async {
         if let unwrappedError = error {
           print(unwrappedError)
-          self.update(unwrappedError)
+          self.update(error: unwrappedError)
           return
         }
-
+        
         guard let unwrappedWeather = weather else {
           return
         }
-        self.update(unwrappedWeather)
-      })
+        self.update(weather: unwrappedWeather)
+      }
+      
     }
   }
 }
