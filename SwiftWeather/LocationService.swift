@@ -23,8 +23,9 @@ class LocationService: NSObject {
   }
 
   func requestLocation() {
-    locationManager.requestWhenInUseAuthorization()
-    locationManager.requestLocation()
+    //locationManager.requestWhenInUseAuthorization()
+    //locationManager.requestLocation()
+    delegate?.locationDidUpdate(service: self, location: CLLocation(latitude: 40.71, longitude: -74.00))
   }
 }
 
